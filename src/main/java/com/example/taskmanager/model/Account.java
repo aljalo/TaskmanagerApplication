@@ -1,0 +1,22 @@
+package com.example.taskmanager.model;
+
+public class Account {
+    private Long id;
+    private String ownerName;
+    private double balance;
+
+    public Account(Long id, String ownerName, double balance){
+        this.id = id;
+        this.ownerName = ownerName;
+        this.balance = balance;
+    }
+    public Long getId(){
+        return id;
+    }
+    public String getOwnerName(){
+        return ownerName;
+    }
+    public double getBalance(){
+        return balance;
+    }
+}
