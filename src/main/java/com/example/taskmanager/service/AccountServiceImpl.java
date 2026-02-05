@@ -1,5 +1,6 @@
 package com.example.taskmanager.service;
 
+import com.example.taskmanager.exception.AccountNotFoundException;
 import com.example.taskmanager.model.Account;
 import com.example.taskmanager.repository.AccountRepository;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
     }
     @Override
     public Account getAccountById(Long id){
-        return accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+        return accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException(id));
     }
 
 }
