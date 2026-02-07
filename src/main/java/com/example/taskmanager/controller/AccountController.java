@@ -40,4 +40,8 @@ public class AccountController {
     public Account updateAccount(@PathVariable Long id, @RequestBody Account account){
         return accountService.updateAccount(id, account);
     }
+    @DeleteMapping("/{id")
+    public void deleteAccount(@PathVariable Long id){
+        accountService.deleteAccount(id);
+    }
 }

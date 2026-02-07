@@ -27,4 +27,15 @@ public class Account {
     public void setBalance(double balance){
         this.balance = balance;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return id != null && id.equals(account.id);
+    }
+    @Override
+    public int hashCode(){
+        return id != null ? id.hashCode() : 0;
+    }
 }

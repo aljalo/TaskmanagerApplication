@@ -24,12 +24,15 @@ public class AccountRepositoryImpl implements AccountRepository {
     public Optional<Account> findById(Long id){
         return accounts.stream().filter(account -> account.getId().equals(id)).findFirst();
     }
+
+    //CREATE
     @Override
     public Account save(Account account){
         accounts.add(account);
         return account;
     }
 
+    //UPDATE
     @Override
     public Account update(Long id , Account updatedAccount){
         Account existing = findById(id).orElseThrow(() -> new AccountNotFoundException(id));
@@ -38,5 +41,13 @@ public class AccountRepositoryImpl implements AccountRepository {
         existing.setBalance(updatedAccount.getBalance());
 
         return existing;
+    }
+
+    //DELETE
+    @Override
+    public void deleteBYId(Long id){
+        Account account = findById(id).orElseThrow(() -> new AccountNotFoundException(id));
+
+        account.remove(account);
     }
 }

@@ -10,7 +10,12 @@ public interface AccountRepository {
 
     Optional<Account> findById(Long id);
 
+    //CREATE
     Account save (Account account);
 
+    //UPDATE
     Account update(Long id, Account account);
+
+    // DELETE
+    void deleteById(Long id);
 }
