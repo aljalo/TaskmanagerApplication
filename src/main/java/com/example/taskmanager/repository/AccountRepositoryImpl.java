@@ -45,9 +45,10 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     //DELETE
     @Override
-    public void deleteBYId(Long id){
-        Account account = findById(id).orElseThrow(() -> new AccountNotFoundException(id));
+    public void deleteById(Long id){
+        Account account = findById(id)
+                .orElseThrow(() -> new AccountNotFoundException(id));
 
-        account.remove(account);
+        accounts.remove(account);
     }
 }
