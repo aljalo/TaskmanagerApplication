@@ -18,10 +18,12 @@ public class AccountServiceImpl implements AccountService {
     public AccountServiceImpl(AccountRepository accountRepository){
         this.accountRepository = accountRepository;
     }
+
     @Override
     public List<Account> getAllAccounts(){
         return accountRepository.findAll();
     }
+
     @Override
     public Account getAccountById(Long id){
         return accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException(id));
@@ -30,6 +32,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account createAccount(Account account){
         return accountRepository.save(account);
+    }
+
+    @Override
+    public Account updateAccount(Long id, Account account){
+        return accountRepository.update(id, account);
     }
 
 }

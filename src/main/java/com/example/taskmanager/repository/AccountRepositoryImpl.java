@@ -1,5 +1,6 @@
 package com.example.taskmanager.repository;
 
+import com.example.taskmanager.exception.AccountNotFoundException;
 import com.example.taskmanager.model.Account;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +28,15 @@ public class AccountRepositoryImpl implements AccountRepository {
     public Account save(Account account){
         accounts.add(account);
         return account;
+    }
+
+    @Override
+    public Account update(Long id , Account updatedAccount){
+        Account existing = findById(id).orElseThrow(() -> new AccountNotFoundException(id));
+
+        existing.setOwnerName(updatedAccount.getOwnerName());
+        existing.setBalance(updatedAccount.getBalance());
+
+        return existing;
     }
 }

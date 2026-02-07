@@ -13,10 +13,18 @@ public class Account {
     public Long getId(){
         return id;
     }
+
     public String getOwnerName(){
         return ownerName;
     }
+
     public double getBalance(){
         return balance;
+    }
+    public void setOwnerName(String ownerName){
+        this.ownerName = ownerName;
+    }
+    public void setBalance(double balance){
+        this.balance = balance;
     }
 }

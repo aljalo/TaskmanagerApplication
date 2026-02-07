@@ -13,4 +13,6 @@ public interface AccountService {
     Account getAccountById(Long id);
 
     Account createAccount(Account account);
+
+    Account updateAccount(Long id, Account account);
 }
