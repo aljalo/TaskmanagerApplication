@@ -23,4 +23,9 @@ public class AccountRepositoryImpl implements AccountRepository {
     public Optional<Account> findById(Long id){
         return accounts.stream().filter(account -> account.getId().equals(id)).findFirst();
     }
+    @Override
+    public Account save(Account account){
+        accounts.add(account);
+        return account;
+    }
 }

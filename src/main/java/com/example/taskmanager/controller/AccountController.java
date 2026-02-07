@@ -3,10 +3,7 @@ package com.example.taskmanager.controller;
 
 import com.example.taskmanager.model.Account;
 import com.example.taskmanager.service.AccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +29,10 @@ public class AccountController {
     @GetMapping("/{id}")
     public Account getAccountById(@PathVariable Long id){
         return accountService.getAccountById(id);
+    }
+
+    @PostMapping
+    public Account createAccount(@RequestBody Account account){
+        return accountService.createAccount(account);
     }
 }
