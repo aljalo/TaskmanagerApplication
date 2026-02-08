@@ -1,6 +1,7 @@
 package com.example.taskmanager.controller;
 
 import com.example.taskmanager.dto.AccountRequestDTO;
+import com.example.taskmanager.dto.AccountResponseDTO;
 import com.example.taskmanager.model.Account;
 import com.example.taskmanager.service.AccountService;
 import jakarta.validation.Valid;
@@ -22,40 +23,51 @@ public class AccountController {
 
     //GET all
     @GetMapping
-    public ResponseEntity<List<Account>> getAllAccounts(){
-        return ResponseEntity.ok(accountService.getAllAccounts());
+//    public ResponseEntity<List<Account>> getAllAccounts(){
+//        return ResponseEntity.ok(accountService.getAllAccounts());
+//    }
+    public ResponseEntity<List<AccountResponseDTO>> getAllAccounts(){
+        List<AccountResponseDTO> response = accountService.getAllAccounts().stream().map(this::toResponse).toList();
+
+        return ResponseEntity.ok(response);
     }
 
     //GET by id
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable Long id){
+        Account account = accountService.getAccountById(id);
+
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
     //CREATE
     @PostMapping
-    public ResponseEntity<Account> createAccount(
+    public ResponseEntity<AccountResponseDTO> createAccount(
             @Valid @RequestBody AccountRequestDTO request){
 
         Account account = new Account(
                 request.getOwnerName(),
                 request.getBalance());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(account));
+        Account saved = accountService.createAccount(account);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(toResponse(saved));
     }
 
     //UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<Account> updateAccount(
+    public ResponseEntity<AccountResponseDTO> updateAccount(
             @PathVariable Long id,
             @Valid @ RequestBody AccountRequestDTO request){
 
-        Account update = new Account(
+        Account updated = new Account(
                 request.getOwnerName(),
                 request.getBalance()
         );
         return ResponseEntity.ok(
-                accountService.updateAccount(id, update)
+                toResponse(accountService.updateAccount(id, updated))
         );
     }
 
@@ -64,5 +76,13 @@ public class AccountController {
     public ResponseEntity<Void> deleteAccount(@PathVariable Long id){
         accountService.deleteAccount(id);
         return ResponseEntity.noContent().build(); // 204 No Content
+    }
+
+    private AccountResponseDTO toResponse(Account account){
+        return new AccountResponseDTO(
+                account.getId(),
+                account.getOwnerName(),
+                account.getBalance()
+        );
     }
 }
