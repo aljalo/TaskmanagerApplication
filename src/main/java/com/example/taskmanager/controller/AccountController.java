@@ -1,7 +1,9 @@
 package com.example.taskmanager.controller;
 
+import com.example.taskmanager.dto.AccountRequestDTO;
 import com.example.taskmanager.model.Account;
 import com.example.taskmanager.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,16 +34,29 @@ public class AccountController {
 
     //CREATE
     @PostMapping
-    public ResponseEntity<Account> createAccount(@RequestBody Account account){
-        Account createAccount = accountService.createAccount(account);
-        return new ResponseEntity<>(createAccount, HttpStatus.CREATED);
+    public ResponseEntity<Account> createAccount(
+            @Valid @RequestBody AccountRequestDTO request){
+
+        Account account = new Account(
+                request.getOwnerName(),
+                request.getBalance());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(account));
     }
 
     //UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account){
-        Account update =  accountService.updateAccount(id, account);
-        return ResponseEntity.ok(update);
+    public ResponseEntity<Account> updateAccount(
+            @PathVariable Long id,
+            @Valid @ RequestBody AccountRequestDTO request){
+
+        Account update = new Account(
+                request.getOwnerName(),
+                request.getBalance()
+        );
+        return ResponseEntity.ok(
+                accountService.updateAccount(id, update)
+        );
     }
 
     //DELETE

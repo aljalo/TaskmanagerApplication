@@ -10,6 +10,10 @@ public class Account {
         this.ownerName = ownerName;
         this.balance = balance;
     }
+    public Account(String ownerName, double balance){
+        this.ownerName = ownerName;
+        this.balance = balance;
+    }
     public Long getId(){
         return id;
     }
