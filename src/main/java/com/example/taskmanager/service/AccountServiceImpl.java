@@ -3,45 +3,46 @@ package com.example.taskmanager.service;
 import com.example.taskmanager.exception.AccountNotFoundException;
 import com.example.taskmanager.model.Account;
 import com.example.taskmanager.repository.AccountRepository;
+import com.example.taskmanager.service.AccountService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-//    @Override
-//    public Account getAccount(){
-//        return new Account(1L, "Ahmed" , 1500.0);
-//    }
+
     private final AccountRepository accountRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository){
+    public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
     @Override
-    public List<Account> getAllAccounts(){
+    public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
 
     @Override
-    public Account getAccountById(Long id){
-        return accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException(id));
+    public Account getAccountById(Long id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new AccountNotFoundException(id));
     }
 
     @Override
-    public Account createAccount(Account account){
+    public Account createAccount(Account account) {
         return accountRepository.save(account);
     }
 
     @Override
-    public Account updateAccount(Long id, Account account){
-        return accountRepository.update(id, account);
+    public Account updateAccount(Long id, Account updated) {
+        Account existing = getAccountById(id);
+        existing.setOwnerName(updated.getOwnerName());
+        existing.setBalance(updated.getBalance());
+        return accountRepository.save(existing);
     }
 
     @Override
-    public void deleteAccount(long id){
+    public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
-
 }

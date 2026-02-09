@@ -1,4 +1,4 @@
-package com.example.demo.handler;
+package com.example.taskmanager.handler;
 
 import com.example.taskmanager.exception.AccountNotFoundException;
 import com.example.taskmanager.exception.ErrorResponse;
